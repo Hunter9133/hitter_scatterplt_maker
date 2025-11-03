@@ -29,7 +29,7 @@ def get_stats(year, stat1, stat2, min_pa=500):
 
     return batting, league_averages
 
-def make_scatter_plot(data_to_plot, league_averages, year, stat1, stat2, n=17):
+def make_scatter_plot(data_to_plot, league_averages, year, stat1, stat2, n=15):
     """
     Creates and displays a scatterplot of individual player stats,
     including league average lines and a curated list of labeled players.
@@ -73,10 +73,13 @@ def make_scatter_plot(data_to_plot, league_averages, year, stat1, stat2, n=17):
 
     # Use adjust_text to prevent label overlaps with fine-tuned parameters
     adjust_text(texts, 
-                arrowprops=dict(arrowstyle='-', color='black', lw=0.5, shrinkA=20),
-                expand_points=(1.0, 1.0), # Add more space around data points
-                force_text=(0.5, 0.75), # Increase text repulsion force
-                force_points=(0.5, 0.5) # Increase point repulsion force
+                arrowprops=dict(arrowstyle='-', color='black', lw=0.5, shrinkA=5), 
+                # Slightly increase expansion around points
+                expand_points=(1.2, 1.2), 
+                # Reduce text-on-text force slightly from (1.0, 1.0) to prevent bunching
+                force_text=(0.75 , 1.0), 
+                # Keep point repulsion high to ensure arrows are drawn
+                force_points=(1.0, 1.0)
                )
 
     ax.legend()
@@ -89,8 +92,8 @@ def make_scatter_plot(data_to_plot, league_averages, year, stat1, stat2, n=17):
 if __name__ == "__main__":
 
     year_to_analyze = 2025
-    x_stat = 'Zone%'
-    y_stat = 'ISO'
+    x_stat = 'AVG'
+    y_stat = 'OBP'
     player_data, league_avg = get_stats(year_to_analyze, x_stat, y_stat)
     make_scatter_plot(player_data, league_avg, year_to_analyze, x_stat, y_stat)
 
